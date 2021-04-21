@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+
+        }
+        .video {
+            position: absolute;
+            display: none;
+            transition: all .3s ease-in-out;
+            width: 100vw;
+        }
+        #video1 {
+            display: block;
+        }
+        .overflow {
+            background-color: rgba(246, 218, 250, 0.664);
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: absolute;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fixed">
+        <div class="overflow"></div>
+
+        <video id="video1" class="video" autoplay muted>
+            <source src="demo.mp4" type="video/mp4">
+        </video>
+        
+        <video id="video2" class="video" muted>
+            <source src="demo.mp4" type="video/mp4">
+        </video>
+        
+        <video id="video3" class="video" muted>
+            <source src="demo.mp4" type="video/mp4">
+        </video>
+    </div>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            var videos = $('video');
+            $.each(videos, function(i){
+                var key = i+1;
+                var nextKey = i + 2;
+                $('#video'+key).on('ended', function(){
+                    console.log(videos.length + 'Length');
+                    console.log(key + 'Key');
+                if(videos.length == key){
+                    $('#video'+key).hide();
+                    $('#video1').show();
+                    playVideo(1);
+                }else {
+                    $('#video'+key).hide();
+                    $('#video'+nextKey).show();
+                    console.log('play next video');
+                    playVideo(nextKey);
+                }
+            })
+            });
+        });
+
+function playVideo(videoID){
+    console.log(videoID);
+    document.getElementById('video'+videoID).play();
+    //$('#'+videoID).trigger('play');
+}
+    </script>
+</body>
+</html>
